@@ -5,3 +5,13 @@ module "aws_vpc" {
     instance_tenancy = each.value.instance_tenancy
     tags             = each.value.tags
 }
+
+module "subnet" {
+    source                  = "./modules/aws-subnet"
+    for_each                = var.subnet_config
+    vpc_id                  = module.aws_vpc[each.value.vpc_name].vpc_id
+    cidr_block              = each.value.cidr_block
+    map_public_ip_on_launch = each.value.map_public_ip_on_launch
+    availability_zone       = each.value.availability_zone
+    tags                    = each.value.tags
+}
