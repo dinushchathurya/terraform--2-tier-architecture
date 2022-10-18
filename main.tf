@@ -15,3 +15,10 @@ module "subnet" {
     availability_zone       = each.value.availability_zone
     tags                    = each.value.tags
 }
+
+module "igw" {
+    source   = "./modules/aws-igw"
+    for_each = var.igw_config
+    vpc_id   = module.aws_vpc[each.value.vpc_name].vpc_id
+    tags     = each.value.tags
+}
