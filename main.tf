@@ -31,3 +31,17 @@ module "route_table" {
     gateway_id = module.igw[each.value.igw_name].igw_id
     tags       = each.value.tags
 }
+
+module "route_table_association" {
+    source           = "./modules/aws-route-table-association"
+    for_each         = var.route_table_association_config
+    subnet_id        = module.subnet[each.value.subnet_name].subnet_id
+    route_table_id   = module.route_table[each.value.table_name].route_table_id
+}
+
+module "security_group" {
+    source                  = "./modules/aws-security-group"
+    for_each                = var.security_group_config
+    security-group-name     = each.value.security_group_name
+    vpc-id                  = module.aws_vpc[each.value.vpc_name].vpc_id
+}
