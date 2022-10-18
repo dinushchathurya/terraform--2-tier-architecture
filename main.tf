@@ -55,3 +55,11 @@ module "lb_target_group" {
     protocol                = each.value.protocol
     tags                    = each.value.tags
 }
+
+module "lb" {
+    source                  = "./modules/aws-lb"
+    for_each                = var.lb_config
+    name                    = each.value.name
+    security_groups         = [module.security_group[each.value.security_groups].security_group_public]
+    subnets                 = [module.subnet[each.value.subnet_one].subnet_id,module.subnet[each.value.subnet_two].subnet_id]
+}

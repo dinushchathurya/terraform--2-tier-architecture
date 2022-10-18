@@ -25,3 +25,7 @@ variable "security_group_config" {
 variable "lb_target_group_config" {
     
 }
+
+variable "lb_config" {
+    
+}
