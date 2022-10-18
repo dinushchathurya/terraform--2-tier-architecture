@@ -85,4 +85,5 @@ module "instance" {
     instance_type           = each.value.instance_type
     subnet_id               = module.subnet[each.value.subnet_name].subnet_id
     security_groups         = [module.security_group[each.value.security_groups].security_group_public]
+    user_data               = each.value.user_data
 }

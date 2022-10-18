@@ -15,3 +15,7 @@ variable "subnet_id" {
 variable "security_groups" {
     description = "Security Group ID"
 }
+
+variable "user_data" {
+
+}
