@@ -22,3 +22,12 @@ module "igw" {
     vpc_id   = module.aws_vpc[each.value.vpc_name].vpc_id
     tags     = each.value.tags
 }
+
+module "route_table" {
+    source     = "./modules/aws-route-table"
+    for_each   = var.route_table_config
+    vpc_id     = module.aws_vpc[each.value.vpc_name].vpc_id
+    cidr_block = each.value.cidr_block
+    gateway_id = module.igw[each.value.igw_name].igw_id
+    tags       = each.value.tags
+}
