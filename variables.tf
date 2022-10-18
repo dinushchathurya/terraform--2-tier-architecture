@@ -33,3 +33,11 @@ variable "lb_config" {
 variable "lb_listener_config" {
     
 }
+
+variable "lb_target_group_attachment_config" {
+    
+}
+
+variable "instance_config" {
+    
+}

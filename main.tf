@@ -70,3 +70,19 @@ module "lb_listener" {
     load_balancer_arn       = module.lb[each.value.alb-name].lb_arn
     target_group_arn        = module.lb_target_group[each.value.target_group_name].lb_target_group_arn
 }
+
+module "lb_target_group_attachment" {
+    source                  = "./modules/aws-lb-target-group-attachment"
+    for_each                = var.lb_target_group_attachment_config
+    target_group_arn        = module.lb_target_group[each.value.target_group_name].lb_target_group_arn
+    target_id               = module.instance[each.value.instance_id].instance_id
+}
+
+module "instance" {
+    source                  = "./modules/aws-instance"
+    for_each                = var.instance_config
+    ami                     = each.value.ami_id
+    instance_type           = each.value.instance_type
+    subnet_id               = module.subnet[each.value.subnet_name].subnet_id
+    security_groups         = [module.security_group[each.value.security_groups].security_group_public]
+}
