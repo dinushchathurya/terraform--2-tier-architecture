@@ -63,3 +63,10 @@ module "lb" {
     security_groups         = [module.security_group[each.value.security_groups].security_group_public]
     subnets                 = [module.subnet[each.value.subnet_one].subnet_id,module.subnet[each.value.subnet_two].subnet_id]
 }
+
+module "lb_listener" {
+    source                  = "./modules/aws-lb-listener"
+    for_each                = var.lb_listener_config
+    load_balancer_arn       = module.lb[each.value.alb-name].lb_arn
+    target_group_arn        = module.lb_target_group[each.value.target_group_name].lb_target_group_arn
+}
