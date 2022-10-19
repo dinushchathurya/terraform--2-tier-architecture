@@ -41,3 +41,11 @@ variable "lb_target_group_attachment_config" {
 variable "instance_config" {
     
 }
+
+variable "db_instance_config" {
+    
+}
+
+variable "db_subnet_group_config" {
+    
+}
