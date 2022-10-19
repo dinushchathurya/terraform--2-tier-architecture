@@ -87,3 +87,26 @@ module "instance" {
     security_groups         = [module.security_group[each.value.security_groups].security_group_public]
     user_data               = each.value.user_data
 }
+
+module "db_instance" {
+    source                  = "./modules/aws-db-instance"
+    for_each                = var.db_instance_config
+    allocated_storage       = each.value.allocated_storage
+    db_name                 = each.value.db_name
+    engine                  = each.value.engine
+    engine_version          = each.value.engine_version
+    instance_class          = each.value.instance_class
+    username                = each.value.username
+    password                = each.value.password
+    parameter_group_name    = each.value.parameter_group_name
+    db_subnet_group_name    = each.value.db_subnet_group_name
+    vpc_security_group_ids  = [module.security_group[each.value.security_groups].security_group_public]
+    skip_final_snapshot     = each.value.skip_final_snapshot
+}
+
+module "db_subnet_group" {
+    source                  = "./modules/aws-db-subnet-group"
+    for_each                = var.db_subnet_group_config
+    name                    = each.value.name
+    subnet_ids              = [module.subnet[each.value.subnet_one].subnet_id,module.subnet[each.value.subnet_two].subnet_id]
+}
