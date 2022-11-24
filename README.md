@@ -1,4 +1,4 @@
-<img src="demo.jpg" width="400" height="400">
+<img src="demo.jpg" width="500" height="500">
 
 ### Inialize
 
